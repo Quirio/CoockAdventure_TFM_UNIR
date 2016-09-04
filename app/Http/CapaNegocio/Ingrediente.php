@@ -1,4 +1,6 @@
-<?php
+<?php	
+	namespace App\Http\CapaNegocio;
+
 	use App\Ingredientes;
 	class Ingrediente{
 		function insert($nombre){			

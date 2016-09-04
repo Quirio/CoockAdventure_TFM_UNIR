@@ -1,4 +1,6 @@
 <?php
+	namespace App\Http\CapaNegocio;
+
 	use App\Cocciones;
 	class Coccion{
 		function insert($nombre){			

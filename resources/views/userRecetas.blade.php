@@ -16,16 +16,46 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Últimas Recetas </i></div>
-
-                <div class="panel-body">
+                  @foreach ($RecetasTime as $Receta)
+                      <div class="row">
+                          <div class="col-sm-12 col-md-12">
+                              <div class="thumbnail">
+                              <center>
+                                  <img src="..." alt="...">
+                                  <div class="caption">
+                                    <h3>{{$Receta->nombreReceta}}</h3>
+                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
+                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-default" role="button btn-danger">Eliminar</a> </p>
+                                  </div>
+                              </center>
+                              </div>
+                          </div>
+                      </div>                  
+                  @endforeach 
+                   <center><?php echo $RecetasTime->render(); ?>  </center>              
+                <div class="panel-body">              
                     
                 </div>
             </div>
-
              <div class="panel panel-default">
                 <div class="panel-heading">Mejores Recetas</div>
-
-                <div class="panel-body">
+                   @foreach ($MejoresRecetas as $Receta)
+                      <div class="row">
+                          <div class="col-sm-12 col-md-12">
+                              <div class="thumbnail">
+                                <center>
+                                  <img src="..." alt="...">
+                                  <div class="caption">
+                                    <h3>{{$Receta->nombreReceta}}</h3>
+                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
+                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-default" role="button btn-danger">Eliminar</a> </p>
+                                  </div>                              
+                                </center>
+                              </div>
+                          </div>
+                      </div>                  
+                  @endforeach
+                <div class="panel-body">            
                     
                 </div>
             </div>
