@@ -4,59 +4,80 @@
 
 <div class="container">
     <!--<div class="row">-->
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading"> Estadísticas</div>
 
                 <div class="panel-body">
-                    
+                    <div class="row">
+                          <div class="col-sm-12 col-md-12">
+                              <center>
+                                  <img src="..." alt="...">
+                                  <div class="caption">
+                                    <h3>{{Auth::user()->name}}</h3>
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                          <span class="badge"> {{$NRecetasUsuario}} </span>
+                                          Nº Recetas
+                                        </li>
+                                       <li class="list-group-item active"> 
+                                          Mejor Receta
+                                       </li>
+                                       <li class="list-group-item"> 
+                                          {{$MejoresRecetas[0]->nombreReceta}}
+                                       </li>
+                                    </ul>
+                                  </div>
+                              </center>
+                          </div>
+                      </div>     
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">Últimas Recetas </i></div>
-                  @foreach ($RecetasTime as $Receta)
+                            
+                <div class="panel-body">              
+                     @foreach ($RecetasTime as $Receta)
                       <div class="row">
                           <div class="col-sm-12 col-md-12">
                               <div class="thumbnail">
                               <center>
+                                  <h3>{{$Receta->nombreReceta}}</h3>
                                   <img src="..." alt="...">
-                                  <div class="caption">
-                                    <h3>{{$Receta->nombreReceta}}</h3>
+                                  <div class="caption">                                    
                                     <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-default" role="button btn-danger">Eliminar</a> </p>
+                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
                                   </div>
                               </center>
                               </div>
                           </div>
                       </div>                  
                   @endforeach 
-                   <center><?php echo $RecetasTime->render(); ?>  </center>              
-                <div class="panel-body">              
-                    
+                   <center><?php echo $RecetasTime->render(); ?>  </center>   
                 </div>
             </div>
              <div class="panel panel-default">
                 <div class="panel-heading">Mejores Recetas</div>
-                   @foreach ($MejoresRecetas as $Receta)
+                  
+                <div class="panel-body">            
+                     @foreach ($MejoresRecetas as $Receta)
                       <div class="row">
                           <div class="col-sm-12 col-md-12">
                               <div class="thumbnail">
                                 <center>
+                                  <h3>{{$Receta->nombreReceta}}</h3>
                                   <img src="..." alt="...">
-                                  <div class="caption">
-                                    <h3>{{$Receta->nombreReceta}}</h3>
+                                  <div class="caption">                                    
                                     <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-default" role="button btn-danger">Eliminar</a> </p>
+                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
                                   </div>                              
                                 </center>
                               </div>
                           </div>
                       </div>                  
                   @endforeach
-                <div class="panel-body">            
-                    
                 </div>
             </div>
 

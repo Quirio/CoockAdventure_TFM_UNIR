@@ -32,23 +32,24 @@
 		}
 
 		function getAllByTime($sentido){
-
+			$nPaginas = 3;
 			switch ($sentido) {
 				case '0':
-					return Recetas::orderBy('id', 'DESC')->paginate(4);
+					return Recetas::orderBy('id', 'DESC')->paginate($nPaginas);
 				case '1':
-					return Recetas::orderBy('id', 'ASC')->paginate(4);				
+					return Recetas::orderBy('id', 'ASC')->paginate($nPaginas);				
 				default:
-					return Recetas::orderBy('id', 'DESC')->paginate(4);
+					return Recetas::orderBy('id', 'DESC')->paginate($nPaginas);
 			}			
 		}
 
 		function getBestRecipes(){
-			return Recetas::orderBy('puntuacion', 'DESC')->paginate(3);
+			$nPaginas = 3;
+			return Recetas::orderBy('puntuacion', 'DESC')->paginate($nPaginas);
 		}
 
-		function getCantidaRecetasByUser($user){
-			return Recetas::where('id_usuario','=',$user)->count();
+		function getCantidaRecetasByUser(){
+			return Recetas::where('id_usuario','=', Auth::id())->count();
 		}
 	}
 ?>

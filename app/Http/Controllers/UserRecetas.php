@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Tipos_Recetas;
@@ -40,7 +41,8 @@ class UserRecetas extends Controller
         return View::make('userRecetas')
                 ->with('tipos', Tipos_Recetas::all())
                 ->with('RecetasTime',$recetas->getAllByTime(0))
-                ->with('MejoresRecetas',$recetas->getBestRecipes());
+                ->with('MejoresRecetas',$recetas->getBestRecipes())
+                ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser());
     }
 
     public function insertReceta(){
