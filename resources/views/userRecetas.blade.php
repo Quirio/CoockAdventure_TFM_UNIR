@@ -45,13 +45,45 @@
                               <div class="thumbnail">
                               <center>
                                   <h3>{{$Receta->nombreReceta}}</h3>
-                                  <img src="..." alt="...">
-                                  <div class="caption">                                    
-                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
-                                  </div>
-                              </center>
-                              </div>
+                                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                  		<ol class="carousel-indicators">
+                                  			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                  		@for ($i = 1; $i < $Receta->n_images; $i++)
+    									    <li data-target="#carousel-example-generic" data-slide-to="{{$i}}"></li> 
+   										@endfor
+   										</ol>
+
+								    <!-- Wrapper for slides -->								   
+									    <div class="carousel-inner" role="listbox">
+									    <?php $active = ""; ?>
+									    @for ($i = 0; $i < $Receta->n_images; $i++)
+									     	@if ($i == 0)
+									     	 <?php $active = "active"; ?>
+											@endif
+									      <div class="item {{$active}}">
+									        <img src="/images/{{$Receta->cdm}}{{$i}}.jpg" alt="...">
+									        <div class="carousel-caption">
+									        </div>
+									      </div>
+									    @endfor
+									    </div>
+
+									    <!-- Controls -->
+									    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+									      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+									      <span class="sr-only">Previous</span>
+									    </a>
+									    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+									      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+									      <span class="sr-only">Next</span>
+									    </a>
+									  </div>
+	                                  <div class="caption">                                    
+	                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
+	                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
+	                                  </div>
+	                              </center>
+	                              </div>
                           </div>
                       </div>                  
                   @endforeach 
@@ -93,9 +125,10 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Receta Nueva </i></div>
 
-                   <form class="form-horizontal" role="form" action="recetas/crear" method="post">
+                   <!--<form class="form-horizontal" role="form" action="recetas/crear" method="post">-->
+                     {!! Form::open(array('url'=>'user/recetas/crear','method'=>'POST', 'files'=>true)) !!}
                    <div class="col-md-12" style="padding:5%">
-                       {{ csrf_field() }}
+                       
                           <div class="form-group @if ($errors->has('nombre')) has-error @endif">
                               <div class="col-sm-12">
                                 <input type="text" placeholder="Nombre" class="form-control" id="nombre" name="nombre">
@@ -136,8 +169,8 @@
                            <div class="form-group @if ($errors->has('images')) has-error @endif">
                               <div class="col-sm-12"> 
                               	<span>Selecciona al menos una imágen de tu receta.</span>
-                               	{!! Form::file('images', array('multiple'=>true)) !!}
-                                   @if ($errors->has('images')) <p class="help-block">{{ $errors->first('images[]') }}</p> @endif
+                               	{!! Form::file('images[]', array('multiple'=>true)) !!}
+                                   @if ($errors->has('images')) <p class="help-block">{{ $errors->first('images') }}</p> @endif
                               </div>
                           </div> 
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">                       
@@ -148,7 +181,11 @@
                           </div>
                         </div>
                       </div>
-                    </form>
+                      {!! Form::close() !!}
+                      @if(Session::has('message'))
+<p class="alert alert-info">{{ Session::get('message') }}</p>
+@endif
+                    <!--</form>-->
                 </div>
             </div>
         </div>

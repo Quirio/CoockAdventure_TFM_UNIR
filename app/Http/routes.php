@@ -26,4 +26,18 @@ Route::get('/',  ['middleware' => 'auth', 'uses' => 'HomeController@index']);
 Route::get('/home',  ['middleware' => 'auth', 'uses' => 'HomeController@index']);
 Route::get('/user',  ['middleware' => 'auth', 'uses' => 'UserPortal@index']);
 Route::get('/user/recetas',  ['middleware' => 'auth', 'uses' => 'UserRecetas@index']);
+Route::get('/images/{filename}', function ($filename)
+{
+    $path = resource_path("img/$filename");
+
+    if(!File::exists($path)) abort(404);
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 Route::post('/user/recetas/crear', ['middleware' => 'auth', 'uses' => 'UserRecetas@insertReceta']);

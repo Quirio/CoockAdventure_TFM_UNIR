@@ -6,7 +6,7 @@
 	use App\Recetas;
 	class Receta{
 		private $id_lastInsert;
-		function insert($nombre,$descripcion,$tipo){
+		function insert($nombre,$descripcion,$tipo,$cdm,$n_images){
 			$recetas = new Recetas;
 			$recetas->nombreReceta = $nombre; 
 			$recetas->descripcion = $descripcion;
@@ -16,6 +16,8 @@
 	        $recetas->destacado = 0;
 	        $recetas->activo = 1;
 	        $recetas->id_usuario = Auth::id();
+	        $recetas->cdm = $cdm;
+			$recetas->n_images = $n_images;
 	        $recetas->save();
 
 	        $this->id_lastInsert = $recetas->id;
@@ -24,6 +26,10 @@
 		function getUltimaCreada(){
 			$recetas = new Recetas;
 			return $recetas->find($this->id_lastInsert);
+		}
+
+		function getIDUltimaCreada(){
+			return $this->id_lastInsert;
 		}
 
 		function getTipoByID($id){
