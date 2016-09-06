@@ -28,9 +28,12 @@ Route::get('/user',  ['middleware' => 'auth', 'uses' => 'UserPortal@index']);
 Route::get('/user/recetas',  ['middleware' => 'auth', 'uses' => 'UserRecetas@index']);
 Route::get('/images/{filename}', function ($filename)
 {
-    $path = resource_path("img/$filename");
+    $path = resource_path("img/$filename.jpg");
 
-    if(!File::exists($path)) abort(404);
+    if(!File::exists($path))
+    	$path = resource_path("img/$filename.jpeg");
+    if(!File::exists($path)) 
+    	abort(404);
 
     $file = File::get($path);
     $type = File::mimeType($path);

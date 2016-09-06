@@ -54,7 +54,7 @@ class UserRecetas extends Controller
             'descripcion' => 'required|min:5|max:5000',
             'coccion' => 'required',
             'ingredientes' => 'required',
-            'images' => 'required|mimes:jpg'
+            'images' => 'required'
         ]);
 
         if ($validator->fails())

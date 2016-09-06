@@ -54,14 +54,14 @@
    										</ol>
 
 								    <!-- Wrapper for slides -->								   
-									    <div class="carousel-inner" role="listbox">
-									    <?php $active = ""; ?>
+									    <div style="height: 10%" class="carousel-inner" role="listbox">								    
 									    @for ($i = 0; $i < $Receta->n_images; $i++)
+									    	<?php $active = ""; ?>
 									     	@if ($i == 0)
 									     	 <?php $active = "active"; ?>
 											@endif
 									      <div class="item {{$active}}">
-									        <img src="/images/{{$Receta->cdm}}{{$i}}.jpg" alt="...">
+									        <img class="img-responsive" style="max-width: 150px" src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
 									        <div class="carousel-caption">
 									        </div>
 									      </div>
