@@ -37,15 +37,89 @@ class UserRecetas extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index($cdm = NULL)
+    {   
         $recetas = new Receta;
+        $modifycdm = NULL;
+        $recetaToModify = NULL;
+        if(isset($cdm)){
+          $modifycdm = $cdm;
+          $recetaToModify = $recetas->getBycdm($cdm);
+        }
+
         return View::make('userRecetas')
                 ->with('tipos', Tipos_Recetas::all())
                 ->with('RecetasTime',$recetas->getAllByTime(0))
                 ->with('MejoresRecetas',$recetas->getBestRecipes())
                 ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser())
-                ->with('Imagenes',"");
+                ->with('modifyCdm',$cdm)
+                ->with('recetaToModify',$recetaToModify);
+    }
+
+    private function randomString($length = 6) {
+      $str = "";
+      $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+      $max = count($characters) - 1;
+      for ($i = 0; $i < $length; $i++) {
+        $rand = mt_rand(0, $max);
+        $str .= $characters[$rand];
+      }
+      return $str;
+    }
+
+    public function delete($cdm){
+      $recetas = new Receta;
+      if($recetas->removebycdmid($cdm))
+        return Redirect::to('user/recetas'); 
+    }
+
+    public function modify($cdm){
+      $validator = validator::make(Input::all(), [
+            'nombre' => 'required|max:255',
+            'descripcion' => 'required|min:5|max:5000',
+            'coccion' => 'required',
+            'ingredientes' => 'required'
+        ]);      
+
+      if ($validator->fails())
+        {
+            $messages = $validator->messages();
+            return Redirect::to('/user/recetas')       
+                ->withErrors($validator);
+        }else {
+            $receta = new Receta;
+            $ingrediente = new Ingrediente;
+            $coccion = new Coccion;
+
+            $files = Input::file('images');
+            $file_count = count($files);            
+
+            $count = 0 ;
+            foreach ($files as $img) {
+              $fileNameFinal = $cdm."$count.".$img->getClientOriginalExtension();
+              $img->move(resource_path().'/img',$fileNameFinal);
+              $count ++;
+            }
+
+            $receta->   modifybycmdid(Request::input('nombre'),Request::input('descripcion'),Request::input('tipo'),$cdm,$file_count);
+
+            $ingredientes_input = explode(',',Request::input('ingredientes'));
+            $coccion_input = explode(',', Request::input('coccion'));
+
+            foreach ($ingredientes_input as $key)
+              $ingrediente->insert($key);    
+
+            foreach ($coccion_input as $key) 
+              $coccion->insert($key);           
+           
+             if($count == $file_count)
+                Session::flash('success', 'Upload successfully');  
+             else
+                Session::flash('message', 'Imagenes subidas: '. $files);
+             return Redirect::to('user/recetas');        
+           
+        }   
+
     }
 
     public function insertReceta(){
@@ -69,7 +143,7 @@ class UserRecetas extends Controller
 
             $files = Input::file('images');
             $file_count = count($files);
-            $cdm = rand(11111,99999);
+            $cdm = $this->randomString();
 
             $count = 0 ;
             foreach ($files as $img) {
@@ -89,17 +163,11 @@ class UserRecetas extends Controller
             foreach ($coccion_input as $key) 
               $coccion->insert($key);           
            
-            
-
-             if($count == $file_count){
-                  Session::flash('success', 'Upload successfully'); 
-                  return Redirect::to('/home');
-              }
-
-              else{
+             if($count == $file_count)
+                Session::flash('success', 'Upload successfully');  
+             else
                 Session::flash('message', 'Imagenes subidas: '. $files);
-                return Redirect::to('user/recetas'); 
-              } 
+             return Redirect::to('user/recetas');           
            
         }
     }
