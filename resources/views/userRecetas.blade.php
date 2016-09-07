@@ -61,7 +61,9 @@
 									     	 <?php $active = "active"; ?>
 											@endif
 									      <div class="item {{$active}}">
-									        <img class="img-responsive" style="max-width: 150px" src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
+									        <img class="img-responsive" style=" width: auto;
+  height: 225px;
+  max-height: 225px;" src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
 									        <div class="carousel-caption">
 									        </div>
 									      </div>
