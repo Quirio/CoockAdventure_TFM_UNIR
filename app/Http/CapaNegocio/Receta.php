@@ -67,9 +67,13 @@
 		}
 
 		function modifybycmdid($nombre,$descripcion,$tipo,$cdm,$n_images){
-			$recetas = Recetas::where('id_usuario', '=',  Auth::id())->where('cdm','=',$cdm)->get();
-			$recetas = new Recetas;
-			$recetas->nombreReceta = $nombre; 
+			Recetas::where('id_usuario', '=',  Auth::id())
+			->where('cdm','=',$cdm)
+			->update(['nombreReceta' => $nombre,
+				'descripcion' => $descripcion,
+				'id_TipoReceta' => $tipo,
+				'n_images'=> $n_images]);
+		/*	$recetas->nombreReceta = $nombre; 
 			$recetas->descripcion = $descripcion;
 			$recetas->id_TipoReceta = $tipo;
 	        $recetas->visualizaciones = 0;
@@ -79,7 +83,7 @@
 	        $recetas->id_usuario = Auth::id();
 	        $recetas->cdm = $cdm;
 			$recetas->n_images = $n_images;
-	        $recetas->save();
+	        $recetas->save();*/
 		}
 	}
 ?>

@@ -73,7 +73,7 @@ class UserRecetas extends Controller
         return Redirect::to('user/recetas'); 
     }
 
-    public function modify($cdm){
+    public function change($cdm){
       $validator = validator::make(Input::all(), [
             'nombre' => 'required|max:255',
             'descripcion' => 'required|min:5|max:5000',
@@ -95,10 +95,12 @@ class UserRecetas extends Controller
             $file_count = count($files);            
 
             $count = 0 ;
-            foreach ($files as $img) {
-              $fileNameFinal = $cdm."$count.".$img->getClientOriginalExtension();
-              $img->move(resource_path().'/img',$fileNameFinal);
-              $count ++;
+            if($file_count > 0){
+              foreach ($files as $img) {
+                $fileNameFinal = $cdm."$count.".$img->getClientOriginalExtension();
+                $img->move(resource_path().'/img',$fileNameFinal);
+                $count ++;
+              }
             }
 
             $receta->   modifybycmdid(Request::input('nombre'),Request::input('descripcion'),Request::input('tipo'),$cdm,$file_count);
