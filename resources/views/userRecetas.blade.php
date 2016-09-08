@@ -23,8 +23,12 @@
                                        <li class="list-group-item active"> 
                                           Mejor Receta
                                        </li>
-                                       <li class="list-group-item"> 
+                                       <li class="list-group-item">
+                                       @if(isset($MejoresRecetas[0]))
                                           {{$MejoresRecetas[0]->nombreReceta}}
+                                       @else
+                                          No tienes recetas publicadas.
+                                       @endif   
                                        </li>
                                     </ul>
                                   </div>
@@ -38,7 +42,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Últimas Recetas </i></div>
                             
-                <div class="panel-body">              
+                <div class="panel-body">             
                      @foreach ($RecetasTime as $Receta)
                       <div class="row">
                           <div class="col-sm-12 col-md-12">
@@ -61,7 +65,10 @@
 									     	 <?php $active = "active"; ?>
 											@endif
 									      <div class="item {{$active}}">
-									        <img class="img-responsive" style="max-width: 150px" src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
+									        <img class="img-responsive" style=" width: auto;
+                                                             height: 225px;
+                                                             max-height: 225px;"
+                          src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
 									        <div class="carousel-caption">
 									        </div>
 									      </div>
@@ -80,7 +87,7 @@
 									  </div>
 	                                  <div class="caption">                                    
 	                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-	                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
+	                                     <p><a href="/user/recetas/modify/{{$Receta->cdm}}" class="btn btn-primary" role="button">Modificar</a> <a href="/user/recetas/delete/{{$Receta->cdm}}" class="btn btn-danger" role="button">Eliminar</a> </p>
 	                                  </div>
 	                              </center>
 	                              </div>
@@ -103,7 +110,7 @@
                                   <img src="..." alt="...">
                                   <div class="caption">                                    
                                     <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-                                     <p><a href="#" class="btn btn-primary" role="button">Modificar</a> <a href="#" class="btn btn-danger" role="button">Eliminar</a> </p>
+                                     <p><a href="/user/recetas/modify/{{$Receta->cdm}}" class="btn btn-primary" role="button">Modificar</a> <a href="/user/recetas/delete/{{$Receta->cdm}}" class="btn btn-danger" role="button">Eliminar</a> </p>
                                   </div>                              
                                 </center>
                               </div>
@@ -123,22 +130,26 @@
         </div>
         <div class="col-md-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Receta Nueva </i></div>
-
+                @if(isset($modifyCdm))
+                    <div class="panel-heading">Modificar Receta </i></div>
+                    {!! Form::open(array('url'=>'/user/recetas/modify/done/'.$modifyCdm,'method'=>'POST', 'files'=>true)) !!}                    
+                @else
+                    <div class="panel-heading">Receta Nueva </i></div>
                    <!--<form class="form-horizontal" role="form" action="recetas/crear" method="post">-->
                      {!! Form::open(array('url'=>'user/recetas/crear','method'=>'POST', 'files'=>true)) !!}
+                @endif
                    <div class="col-md-12" style="padding:5%">
                        
                           <div class="form-group @if ($errors->has('nombre')) has-error @endif">
                               <div class="col-sm-12">
-                                <input type="text" placeholder="Nombre" class="form-control" id="nombre" name="nombre">
+                                <input type="text" value="<?php if(isset($modifyCdm)) echo $recetaToModify[0]->nombreReceta; ?>" placeholder="Nombre" class="form-control" id="nombre" name="nombre">
                                 @if ($errors->has('nombre')) <p class="help-block">{{ $errors->first('nombre') }}</p> @endif
                               </div>
                           </div>
                           <div class="form-group @if ($errors->has('descripcion')) has-error @endif">
                               <div class="col-sm-12"> 
                                 <span>Descripción de receta</span><br>
-                                <textarea class="ckeditor" id="descripcion" name="descripcion" placeholder="Descripción de receta"></textarea>
+                                <textarea class="ckeditor" id="descripcion" name="descripcion" placeholder="Descripción de receta"><?php if(isset($modifyCdm)) echo $recetaToModify[0]->descripcion; ?></textarea>
                                 @if ($errors->has('descripcion')) <p class="help-block">{{ $errors->first('descripcion') }}</p> @endif
                               </div>
                           </div>
@@ -147,7 +158,7 @@
                                   <span>Tipo de receta</span><br>
                                   <select class="selectpicker" id="tipo" name="tipo">
                                       @foreach ($tipos as $tipo)
-                                         <option value="{{$tipo->nombre_tipo}}">{{$tipo->nombre_tipo}}</option>
+                                         <option  class="<?php if(isset($modifyCdm) && $tipo->id == $recetaToModify[0]->id_TipoReceta) echo 'selected';?>" value="{{$tipo->nombre_tipo}}">{{$tipo->nombre_tipo}}</option>
                                       @endforeach
                                   </select>                                
                               </div>
@@ -175,12 +186,22 @@
                           </div> 
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">                       
                         
+                        @if(isset($modifyCdm))
                         <div class="form-group"> 
                           <div class="col-sm-offset-2 col-sm-10">
-                            <center><button type="submit" class="btn btn-primary">Crear Tu receta</button></center>
+                            <center><button type="submit" class="btn btn-primary">Modificar Receta</button></center>
+                            <center><a href="/user/recetas" class="btn btn-primary">Cancelar</a></center>
                           </div>
                         </div>
-                      </div>
+                        @else
+                         <div class="form-group"> 
+                            <div class="col-sm-offset-2 col-sm-10">
+                               <center><button type="submit" class="btn btn-primary">Crear Tu Receta</button></center>
+                            </div>
+                          </div>
+                        @endif
+
+             </div>
                       {!! Form::close() !!}
                       @if(Session::has('message'))
 <p class="alert alert-info">{{ Session::get('message') }}</p>
