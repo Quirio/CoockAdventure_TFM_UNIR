@@ -28,6 +28,21 @@ Route::get('/user',  ['middleware' => 'auth', 'uses' => 'UserPortal@index']);
 Route::get('/user/recetas',  ['middleware' => 'auth', 'uses' => 'UserRecetas@index']);
 Route::get('/user/recetas/delete/{cdm}', ['middleware' => 'auth', 'uses' => 'UserRecetas@delete']);
 Route::get('/user/recetas/modify/{cdm}', ['middleware' => 'auth', 'uses' => 'UserRecetas@index']);
+
+Route::get('/images/estilos/{filename}', function ($filename)
+{   
+    $path = resource_path("img/estilos/$filename.png");
+    if(!File::exists($path)) 
+        abort(404);
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 Route::get('/images/{filename}', function ($filename)
 {
     $path = resource_path("img/$filename.jpg");
@@ -45,5 +60,7 @@ Route::get('/images/{filename}', function ($filename)
 
     return $response;
 });
+
+
 Route::post('/user/recetas/modify/done/{cdm}', ['middleware' => 'auth', 'uses' => 'UserRecetas@change']);
 Route::post('/user/recetas/crear', ['middleware' => 'auth', 'uses' => 'UserRecetas@insertReceta']);

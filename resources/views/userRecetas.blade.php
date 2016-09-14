@@ -5,7 +5,7 @@
 <div class="container">
     <!--<div class="row">-->
         <div class="col-md-3">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading"> Estadísticas</div>
 
                 <div class="panel-body">
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">Últimas Recetas </i></div>
                             
                 <div class="panel-body">             
@@ -97,7 +97,7 @@
                    <center><?php echo $RecetasTime->render(); ?>  </center>   
                 </div>
             </div>
-             <div class="panel panel-default">
+             <div class="panel panel-primary">
                 <div class="panel-heading">Mejores Recetas</div>
                   
                 <div class="panel-body">            
@@ -120,7 +120,7 @@
                 </div>
             </div>
 
-             <div class="panel panel-default">
+             <div class="panel panel-primary">
                 <div class="panel-heading">Buscar Recetas</div>
 
                 <div class="panel-body">
@@ -129,7 +129,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 @if(isset($modifyCdm))
                     <div class="panel-heading">Modificar Receta </i></div>
                     {!! Form::open(array('url'=>'/user/recetas/modify/done/'.$modifyCdm,'method'=>'POST', 'files'=>true)) !!}                    

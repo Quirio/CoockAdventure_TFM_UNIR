@@ -44,7 +44,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-primary navbar-static-top">
         <div class="container">
             <div class="navbar-header">
 
