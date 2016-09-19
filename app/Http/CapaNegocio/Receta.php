@@ -53,9 +53,26 @@
 			}			
 		}
 
+		function getAllByTimeByAuthUser($sentido){
+			$nPaginas = 3;
+			switch ($sentido) {
+				case '0':
+					return Recetas::where('id_usuario', Auth::id())->orderBy('id', 'DESC')->paginate($nPaginas);
+				case '1':
+					return Recetas::where('id_usuario', Auth::id())->orderBy('id', 'ASC')->paginate($nPaginas);				
+				default:
+					return Recetas::where('id_usuario', Auth::id())->orderBy('id', 'DESC')->paginate($nPaginas);
+			}			
+		}
+
 		function getBestRecipes(){
 			$nPaginas = 3;
 			return Recetas::orderBy('puntuacion', 'DESC')->paginate($nPaginas);
+		}
+
+		function getBestRecipesByAuthUser(){
+			$nPaginas = 3;
+			return Recetas::where('id_usuario', Auth::id())->orderBy('puntuacion', 'DESC')->paginate($nPaginas);
 		}
 
 		function getCantidaRecetasByUser(){

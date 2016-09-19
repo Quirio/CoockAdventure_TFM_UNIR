@@ -55,8 +55,8 @@ class UserRecetas extends Controller
 
         return View::make('userRecetas')
                 ->with('tipos', Tipos_Recetas::all())
-                ->with('RecetasTime',$recetas->getAllByTime(0))
-                ->with('MejoresRecetas',$recetas->getBestRecipes())                
+                ->with('RecetasTime',$recetas->getAllByTimeByAuthUser(0))
+                ->with('MejoresRecetas',$recetas->getBestRecipesByAuthUser())                
                 ->with('modifyCdm',$cdm)
                 ->with('recetaToModify',$recetaToModify)
                 ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser())
