@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container">
-    <!--<div class="row">-->
-        <div class="col-md-3">
+ <!--<div class="container">
+   <div class="row">-->
+        <!--<div class="col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading"> Estadísticas</div>
 
@@ -12,9 +12,15 @@
                     <div class="row">
                           <div class="col-sm-12 col-md-12">
                               <center>
-                                  <img src="..." alt="...">
+                                  <img height="60" width="60" src="/images/gorro" alt="...">
                                   <div class="caption">
                                     <h3>{{Auth::user()->name}}</h3>
+                                    <h2><span class="label label-primary">{{$nivel}}</span></h2>
+                                    <div class="progress">
+  										<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{$progreso}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$progreso}}%">
+    											<span class="sr-only">{{$progreso}}% Complete</span>
+  										</div>
+									</div>
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                           <span class="badge"> {{$NRecetasUsuario}} </span>
@@ -37,7 +43,7 @@
                       </div>     
                 </div>
             </div>
-        </div>
+        </div>-->
         <div class="col-md-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">Últimas Recetas </i></div>
@@ -58,22 +64,24 @@
    										</ol>
 
 								    <!-- Wrapper for slides -->								   
-									    <div style="height: 10%" class="carousel-inner" role="listbox">								    
-									    @for ($i = 0; $i < $Receta->n_images; $i++)
-									    	<?php $active = ""; ?>
-									     	@if ($i == 0)
-									     	 <?php $active = "active"; ?>
-											@endif
-									      <div class="item {{$active}}">
-									        <img class="img-responsive" style=" width: auto;
-                                                             height: 225px;
-                                                             max-height: 225px;"
-                          src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
-									        <div class="carousel-caption">
-									        </div>
-									      </div>
-									    @endfor
-									    </div>
+									    <a href="/recetas/{{$Receta->cdm}}">
+										    <div style="height: 10%" class="carousel-inner" role="listbox">								    
+										    @for ($i = 0; $i < $Receta->n_images; $i++)
+										    	<?php $active = ""; ?>
+										     	@if ($i == 0)
+										     	 <?php $active = "active"; ?>
+												@endif
+										      <div class="item {{$active}}">
+										        <img class="img-responsive" style=" width: auto;
+	                                                             height: 225px;
+	                                                             max-height: 225px;"
+	                          src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
+										        <div class="carousel-caption">
+										        </div>
+										      </div>
+										    @endfor
+										    </div>
+									    </a>
 
 									    <!-- Controls -->
 									    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -85,10 +93,13 @@
 									      <span class="sr-only">Next</span>
 									    </a>
 									  </div>
-	                                  <div class="caption">                                    
-	                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
-	                                     <p><a href="/user/recetas/modify/{{$Receta->cdm}}" class="btn btn-primary" role="button">Modificar</a> <a href="/user/recetas/delete/{{$Receta->cdm}}" class="btn btn-danger" role="button">Eliminar</a> </p>
-	                                  </div>
+
+									  <a href="/recetas/{{$Receta->cdm}}">
+		                                  <div class="caption">                                    
+		                                    <p><?php echo mb_strimwidth(html_entity_decode($Receta->descripcion), 0, 600, "...");?></p>
+		                                     <p><a href="/user/recetas/modify/{{$Receta->cdm}}" class="btn btn-primary" role="button">Modificar</a> <a href="/user/recetas/delete/{{$Receta->cdm}}" class="btn btn-danger" role="button">Eliminar</a> </p>
+		                                  </div>
+	                                  </a>
 	                              </center>
 	                              </div>
                           </div>
@@ -109,7 +120,7 @@
                                   <h3>{{$Receta->nombreReceta}}</h3>
                                   <img src="..." alt="...">
                                   <div class="caption">                                    
-                                    <p><?php echo html_entity_decode($Receta->descripcion);?></p>
+                                    <p><?php echo mb_strimwidth(html_entity_decode($Receta->descripcion), 0, 600, "...");?></p>
                                      <p><a href="/user/recetas/modify/{{$Receta->cdm}}" class="btn btn-primary" role="button">Modificar</a> <a href="/user/recetas/delete/{{$Receta->cdm}}" class="btn btn-danger" role="button">Eliminar</a> </p>
                                   </div>                              
                                 </center>
@@ -222,5 +233,5 @@
     <li role="separator" class="divider"></li>
     <li><a href="#">Separated link</a></li>
   </ul></div>-->
-</div>
+ <!--</div>-->
 @endsection

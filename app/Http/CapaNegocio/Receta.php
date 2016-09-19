@@ -38,7 +38,7 @@
 		}
 
 		function getBycdm($cdm){
-			return Recetas::where('cdm','=', $cdm)->get();
+			return Recetas::where('cdm','=', $cdm)->get()[0];
 		}
 
 		function getAllByTime($sentido){
