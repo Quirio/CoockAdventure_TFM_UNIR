@@ -39,5 +39,12 @@
 			Personajes::where('usuario','=', $id)
 				->update(['prestigioTotal' => $personaje->prestigioTotal+$variacion_prestigio,'prestigioNivel' => $personaje->prestigioNivel+$variacion_prestigio]);
 		}
+
+		function decrementprestigioByUserID($id){
+			$variacion_prestigio = 10;
+			$personaje = Personajes::where('usuario','=', $id)->get()[0];
+			Personajes::where('usuario','=', $id)
+				->update(['prestigioTotal' => $personaje->prestigioTotal-$variacion_prestigio,'prestigioNivel' => $personaje->prestigioNivel-$variacion_prestigio]);
+		}
 	}
 ?>

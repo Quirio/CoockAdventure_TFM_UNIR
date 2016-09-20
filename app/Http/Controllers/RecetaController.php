@@ -37,6 +37,16 @@ class RecetaController extends Controller
 
         $id = $recetas->getBycdm($cdm)->id_usuario;
         $personaje->incrementprestigioByUserID($id);
+        return back();
+    }
+
+    public function negativa($cdm){
+        $recetas = new Receta;
+        $personaje = new Personaje;
+
+        $id = $recetas->getBycdm($cdm)->id_usuario;
+        $personaje->decrementprestigioByUserID($id);
+        return back();
     }
 
     /**
