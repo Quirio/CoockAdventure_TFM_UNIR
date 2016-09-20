@@ -53,7 +53,7 @@
 																 <img class="media-object" height="60" width="60" src="/images/gorro" alt="...">
 																<div class="caption">
 																<center>
-																	<h3>Alejandro</h3>
+																	<h3>{{$CreadoresRecetas[$Receta->cdm]->name}}</h3>
 																	</center>
 																	<p>
 
@@ -82,8 +82,8 @@
 													<div class="item {{$active}}">
 														<a href="/recetas/{{$Receta->cdm}}">
 															<img class="img-responsive" style=" width: auto;
-																																 height: 225px;
-																																 max-height: 225px;"
+																height: 225px;
+																max-height: 225px;"
 															src="/images/{{$Receta->cdm}}{{$i}}" alt="...">
 														</a>
 														<div class="carousel-caption">
