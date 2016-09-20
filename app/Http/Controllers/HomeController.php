@@ -12,6 +12,7 @@ use App\Http\CapaNegocio\Ingrediente;
 use App\Http\CapaNegocio\Coccion;
 use App\Http\CapaNegocio\FotosReceta;
 use App\Http\CapaNegocio\Personaje as PJ;
+use App\Http\CapaNegocio\Valoracion;
 
 class HomeController extends Controller
 {
@@ -39,11 +40,14 @@ class HomeController extends Controller
         $recetas = new Receta;
         $recetasTime = $recetas->getAllByTime(0);
 
+        $valoraciones = new Valoracion;
         $usuario = new Usuario;
         $creadoresRecetas = [];
+        $valoracionesRecetas = [];
 
         foreach ($recetasTime as $receta){
             $creadoresRecetas[$receta->cdm] = $usuario->getUsuarioByid($receta->id_usuario);
+            $valoracionesRecetas[$receta->cdm] = $valoraciones->getValoracionesByAuthUserID($receta->cdm);
         }
         
 
@@ -54,6 +58,7 @@ class HomeController extends Controller
         return View::make('home')
                 ->with('RecetasTime',$recetasTime)
                 ->with('CreadoresRecetas',$creadoresRecetas)
+                ->with('ValoracionesRecetas',$valoracionesRecetas)
                 ->with('MejoresRecetas',$recetas->getBestRecipes())
                 ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser())
                 ->with('nivel',$nivel )

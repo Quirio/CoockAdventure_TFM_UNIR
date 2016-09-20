@@ -17,6 +17,7 @@ use App\Tipos_Recetas;
 use App\Http\CapaNegocio\Receta;
 use App\Http\CapaNegocio\Usuario;
 use App\http\CapaNegocio\Personaje;
+use App\http\CapaNegocio\Valoracion;
 class RecetaController extends Controller
 {
     /**
@@ -34,18 +35,23 @@ class RecetaController extends Controller
     public function positiva($cdm){
         $recetas = new Receta;
         $personaje = new Personaje;
+        $valoracion = new Valoracion;
 
         $id = $recetas->getBycdm($cdm)->id_usuario;
         $personaje->incrementprestigioByUserID($id);
+        $valoracion->insertValoracion($cdm,1);
         return back();
     }
 
     public function negativa($cdm){
         $recetas = new Receta;
         $personaje = new Personaje;
+        $valoracion = new Valoracion;
+
 
         $id = $recetas->getBycdm($cdm)->id_usuario;
         $personaje->decrementprestigioByUserID($id);
+        $valoracion->insertValoracion($cdm,0);
         return back();
     }
 

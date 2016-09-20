@@ -106,10 +106,19 @@
 											 <a href="/recetas/{{$Receta->cdm}}">
 												 <div class="caption">                                    
 													 <p><?php echo mb_strimwidth(html_entity_decode($Receta->descripcion), 0, 600, "...");?></p>
-														<p>
-														 	<a class="btn btn-warning" role="button"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>
-															<a href="receta/valoracion/positiva/{{$Receta->cdm}}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
-														 	<a href="receta/valoracion/negativa/{{$Receta->cdm}}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a> 
+														<p>															
+														 	@if(count($ValoracionesRecetas[$Receta->cdm])>0)
+															 	@if($ValoracionesRecetas[$Receta->cdm][0]->valoraciones == "0")
+																	<a href="receta/valoracion/positiva/{{$Receta->cdm}}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+															 		<a href="receta/valoracion/negativa/{{$Receta->cdm}}" class="btn btn-danger disabled" role="button"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a>
+															 	@elseif($ValoracionesRecetas[$Receta->cdm][0]->valoraciones == "1")
+															 		<a href="receta/valoracion/positiva/{{$Receta->cdm}}" class="btn btn-success disabled" role="button"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+															 		<a href="receta/valoracion/negativa/{{$Receta->cdm}}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a>
+															 	@endif
+														 	@else
+														 		<a href="receta/valoracion/positiva/{{$Receta->cdm}}" class="btn btn-success" role="button"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+														 		<a href="receta/valoracion/negativa/{{$Receta->cdm}}" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></a>
+														 	@endif
 														</p>
 												 </div>
 											 </a>
