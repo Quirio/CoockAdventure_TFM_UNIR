@@ -21,6 +21,11 @@
 		    }
 		}
 
+		function subirNivel($id){
+			Personajes::where('usuario','=', $id)
+				->increment('nivel');
+		}
+
 		function getPersonajeByUserID($id){
 			return Personajes::where('usuario','=', $id)->get()[0];
 		}
@@ -36,8 +41,17 @@
 		function incrementprestigioByUserID($id){
 			$variacion_prestigio = 10;
 			$personaje = Personajes::where('usuario','=', $id)->get()[0];
-			Personajes::where('usuario','=', $id)
-				->update(['prestigioTotal' => $personaje->prestigioTotal+$variacion_prestigio,'prestigioNivel' => $personaje->prestigioNivel+$variacion_prestigio]);
+
+			if($personaje->prestigioNivel+$variacion_prestigio != 200)
+				Personajes::where('usuario','=', $id)
+					->update(['prestigioTotal' => $personaje->prestigioTotal+$variacion_prestigio,'prestigioNivel' => $personaje->prestigioNivel+$variacion_prestigio]);
+			else{
+				$this->subirNivel($id);
+				Personajes::where('usuario','=', $id)
+					->update(['prestigioTotal' => $personaje->prestigioTotal+$variacion_prestigio,'prestigioNivel' => 0]);
+			}
+
+
 		}
 
 		function decrementprestigioByUserID($id){
