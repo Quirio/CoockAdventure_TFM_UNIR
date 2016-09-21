@@ -44,7 +44,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-primary navbar-static-top">
         <div class="container">
             <div class="navbar-header">
 
@@ -79,7 +79,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{Auth::user()->name }}<span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -94,8 +94,51 @@
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="col-md-3">
+                @if(isset($nivel)&&isset($progreso)&&isset($NRecetasUsuario))
+                <div class="panel panel-primary">
+                    <div class="panel-heading"> Estadísticas</div>
 
-    @yield('content')
+                    <div class="panel-body">
+                        <div class="row">
+                              <div class="col-sm-12 col-md-12">
+                                  <center>
+                                      <img height="60" width="60" src="/images/gorro" alt="...">
+                                      <div class="caption">
+                                        <h3>{{Auth::user()->name}}</h3>
+                                        <h2><span class="label label-primary">{{$nivel}}</span></h2>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{$progreso}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$progreso}}%">
+                                                    <span class="sr-only">{{$progreso}}% Complete</span>
+                                            </div>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                              <span class="badge"> {{$NRecetasUsuario}} </span>
+                                              Nº Recetas
+                                            </li>
+                                           <li class="list-group-item active"> 
+                                              Mejor Receta
+                                           </li>
+                                           <li class="list-group-item">
+                                           @if(isset($MejoresRecetas[0]))
+                                              {{$MejoresRecetas[0]->nombreReceta}}
+                                           @else
+                                              No tienes recetas publicadas.
+                                           @endif   
+                                           </li>
+                                        </ul>
+                                      </div>
+                                  </center>
+                              </div>
+                          </div>     
+                    </div>
+                </div>
+                @endif
+            </div>
+        @yield('content')
+        </div>
 
     <!-- JavaScripts -->
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

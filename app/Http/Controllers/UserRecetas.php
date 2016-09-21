@@ -15,6 +15,7 @@ use App\Http\Requests;
 use App\Tipos_Recetas;
 
 use App\Http\CapaNegocio\Receta;
+use App\Http\CapaNegocio\Personaje as PJ;
 use App\Http\CapaNegocio\Ingrediente;
 use App\Http\CapaNegocio\Coccion;
 use App\Http\CapaNegocio\FotosReceta;
@@ -40,6 +41,7 @@ class UserRecetas extends Controller
     public function index($cdm = NULL)
     {   
         $recetas = new Receta;
+        $personaje = new PJ;
         $modifycdm = NULL;
         $recetaToModify = NULL;
         if(isset($cdm)){
@@ -47,13 +49,19 @@ class UserRecetas extends Controller
           $recetaToModify = $recetas->getBycdm($cdm);
         }
 
+        $personaje= $personaje->getPersonajeByAuthUserID();
+        $nivel = $personaje->nivel;
+        $progreso = ($personaje->prestigioNivel/2000)*100;
+
         return View::make('userRecetas')
                 ->with('tipos', Tipos_Recetas::all())
-                ->with('RecetasTime',$recetas->getAllByTime(0))
-                ->with('MejoresRecetas',$recetas->getBestRecipes())
-                ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser())
+                ->with('RecetasTime',$recetas->getAllByTimeByAuthUser(0))
+                ->with('MejoresRecetas',$recetas->getBestRecipesByAuthUser())                
                 ->with('modifyCdm',$cdm)
-                ->with('recetaToModify',$recetaToModify);
+                ->with('recetaToModify',$recetaToModify)
+                ->with('NRecetasUsuario',$recetas->getCantidaRecetasByUser())
+                ->with('nivel',$nivel )
+                ->with('progreso',$progreso);
     }
 
     private function randomString($length = 6) {
