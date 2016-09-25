@@ -64,11 +64,11 @@
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Recetas</a></li>
-                    <li><a href="{{ url('/home') }}">Amigos</a></li>
-                    <li><a href="{{ url('/home') }}">Busqueda Avanzada</a></li>
-                </ul>
+               <!-- <ul class="nav navbar-nav">
+                    <li class="disabled"><a  href="{{ url('/home') }}">Recetas</a></li>
+                    <li class="disabled"><a  href="{{ url('/home') }}">Amigos</a></li>
+                    <li class="disabled"><a  href="{{ url('/home') }}">Busqueda Avanzada</a></li>
+                </ul>-->
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
@@ -83,8 +83,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/user') }}"><i class="fa fa-btn fa-user"></i>Mi Cuenta</a></li>
-                                <li><a href="{{ url('/logout') }}"><i class="glyphicon glyphicon-education"></i> Mi Progreso</a></li>
+                                <!--<li class="disabled"><a href="{{ url('/user') }}"><i class="fa fa-btn fa-user"></i>Mi Cuenta</a></li>
+                                <li class="disabled"><a href="{{ url('/logout') }}"><i class="glyphicon glyphicon-education"></i> Mi Progreso</a></li>-->
                                 <li><a href="{{ url('/user/recetas') }}"><i class="fa fa-btn fa-list-alt"></i>Mis Recetas</a></li>                               
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
