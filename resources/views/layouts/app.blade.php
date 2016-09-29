@@ -65,9 +65,9 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Recetas</a></li>
+                    <li><a href="{{ url('/user/recetas') }}">Recetas</a></li>
                     <li><a href="{{ url('/home') }}">Amigos</a></li>
-                    <li><a href="{{ url('/home') }}">Busqueda Avanzada</a></li>
+                    <li><a href="{{ url('/recetas/búsqueda') }}">Busqueda Avanzada</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

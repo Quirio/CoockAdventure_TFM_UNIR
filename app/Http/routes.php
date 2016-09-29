@@ -32,6 +32,8 @@ Route::get('/user/recetas/modify/{cdm}', ['middleware' => 'auth', 'uses' => 'Use
 Route::post('/user/recetas/modify/done/{cdm}', ['middleware' => 'auth', 'uses' => 'UserRecetas@change']);
 Route::post('/user/recetas/crear', ['middleware' => 'auth', 'uses' => 'UserRecetas@insertReceta']);
 
+Route::get('/recetas/búsqueda', ['middleware' => 'auth', 'uses' => 'BuscadorController@index']);
+
 Route::get('/recetas/{cdm}',['middleware' => 'auth', 'uses' => 'RecetaController@index']);
 Route::get('/receta/valoracion/positiva/{cdm}',['middleware' => 'auth', 'uses' => 'RecetaController@positiva']);
 Route::get('/receta/valoracion/negativa/{cdm}',['middleware' => 'auth', 'uses' => 'RecetaController@negativa']);
